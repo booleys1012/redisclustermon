@@ -1,0 +1,17 @@
+eclipse.preferences.version=1
+encoding//pyrcm/app.py=utf-8
+encoding//pyrcm/models/contenttype.py=utf-8
+encoding//pyrcm/models/message.py=utf-8
+encoding//pyrcm/rcm.py=utf-8
+encoding//pyrcm/terminal/commandmediator.py=utf-8
+encoding//pyrcm/terminal/rediscmd.py=utf-8
+encoding//pyrcm/terminal/rediscmd_del.py=utf-8
+encoding//pyrcm/terminal/rediscmd_exists.py=utf-8
+encoding//pyrcm/terminal/rediscmd_get.py=utf-8
+encoding//pyrcm/terminal/rediscmd_hget.py=utf-8
+encoding//pyrcm/terminal/rediscmd_hgetall.py=utf-8
+encoding//pyrcm/terminal/rediscmd_noop.py=utf-8
+encoding//pyrcm/terminal/rediscmd_scaniter.py=utf-8
+encoding//pyrcm/worker/rcworker.py=utf-8
+encoding//pyrcm/worker/summaryqueue.py=utf-8
+encoding/setup.py=utf-8

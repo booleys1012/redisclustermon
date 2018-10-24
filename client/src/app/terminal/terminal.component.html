@@ -1,0 +1,86 @@
+
+<mat-sidenav-container fullscreen>
+	<mat-sidenav #sidenav style="width:70%">
+		<mat-nav-list style="display:flex">
+			<a mat-list-item href="https://github.com/booleys1012/redisclustermon" target="_blank"> <mat-icon mat-list-icon>cloud_circle</mat-icon>
+				<span mat-line>RedisClusterMonitor on GitHub...</span>
+			</a>
+		</mat-nav-list>
+		
+		<div class="terminal-footer-container">
+		
+				<mat-list class="terminal-list" style="max-height: 70vh; overflow-y: scroll">
+					<mat-list-item
+						style="height: unset"
+						*ngFor="let message of messages"
+						[ngClass]="[(true)? 'terminal-list-item': '']">
+
+						
+						<pre mat-line style="font-size: xx-small;" class="" *ngIf="message.contenttype === contenttype.TERMINALREQUEST">
+							<div >> {{message.content}}</div>
+						</pre>
+						
+						<pre mat-line style="font-size: xx-small;" >
+							<div >
+								<pre [ngClass]="{ 'terminal-response-error': message.content.data_is_error,  'terminal-response-good': !message.content.data_is_error }" *ngIf="message.contenttype === contenttype.TERMINALRESPONSE">{{message.content.data | json}}</pre>
+							</div>
+						</pre>
+						
+					</mat-list-item> 
+				</mat-list>
+			<mat-icon class="terminal-footer-icon">send</mat-icon>
+			<mat-form-field class="terminal-input"> <input
+				matInput #inputMessage maxlength="720"
+				placeholder="Enter command" [(ngModel)]="messageContent"
+				(keyup.enter)="sendMessage(messageContent)" 
+				(keyup.arrowup)="displayRequestHistory(-1)"  
+				(keyup.arrowdown)="displayRequestHistory(1)" cdkFocusInitial>
+				<mat-hint align="end">{{inputMessage.value.length}}/720</mat-hint>
+			</mat-form-field>
+			<div style="display: flex">
+				<div *ngFor="let cmdname of dynamicCommandsOrder">
+					<button type="button"
+						[ngClass]="{'btn': true,
+						            'btn-sm': true,
+						            'btn-primary': dynamicCommands[cmdname].read_or_write === 'read',
+						            'btn-warning': dynamicCommands[cmdname].read_or_write === 'write' }"
+						(click)="loadCmdtemplate(cmdname)">{{ cmdname }}
+					</button>
+					&nbsp;
+				</div>
+				
+				
+			</div>
+		</div>
+	</mat-sidenav>
+
+	<div>
+	<mat-toolbar color="primary">
+	<button mat-icon-button (click)="sidenav.toggle()">
+		<mat-icon>menu</mat-icon>
+	</button>
+	<span>RedisClusterMonitor 0.1.0</span> </mat-toolbar>
+
+	<button mat-fab (click)="onClickUserInfo()">
+		<mat-icon>person</mat-icon>
+	</button>
+	<div>
+		<div class="summary-container">
+		
+			
+			<mat-card class="main-card"> 
+			
+				<rcm-summary (terminalResponse)="onTerminalResponse($event)"></rcm-summary>
+			
+			</mat-card>
+		</div>
+		<div class="summary-container-footer">
+			<button mat-icon-button (click)="sidenav.toggle()">
+				<mat-icon>developer_mode</mat-icon>Open Terminal...
+			</button>
+		</div>
+	</div>
+</div>
+</mat-sidenav-container>
+
+

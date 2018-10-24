@@ -1,0 +1,78 @@
+<div>
+	<mat-spinner  [diameter]="20" [hidden]="summarydata !== undefined"></mat-spinner>
+	<div style="display: flex; justify-content: space-between">
+		<mat-card *ngFor="let item of summarydata | mapToIterable" style="background:transparent; flex-grow:1; margin:5px" class="redismaster-card">
+			<mat-card-header [ngClass]="{'redismaster-card-header':true}" color="primary">
+				<mat-icon mat-card-avatar class="redismaster-connected-icon"
+					*ngIf="item.val['link_state'] == 'connected' && item.val['cluster_state'] == 'ok'"
+					[matTooltip]="'link-state[' + item.val['link_state'] + '] cluster-state[' + item.val['cluster_state'] + ']'" matTooltipPosition="right"
+					>thumb_up</mat-icon>
+				<mat-icon mat-card-avatar class="redismaster-notconnected-icon"
+					*ngIf="item.val['link_state'] != 'connected' && item.val['cluster_state'] == 'ok'" 
+					[matTooltip]="'link-state[' + item.val['link_state'] + '] cluster-state[' + item.val['cluster_state'] + ']'" matTooltipPosition="right"
+					>thumb_down</mat-icon>
+				<mat-card-title>
+					<div style="display: flex">
+					  <div>Master</div>
+					  <div>
+					    <button type="button" class="btn btn-sm" style="background-color:transparent" (click)="openMasterDialog(item.key)">
+						    <mat-icon style="font-size: 15px !important; height:15px; width:15px;" >open_in_new</mat-icon>
+						</button>
+					  </div>
+					 </div>
+				</mat-card-title>
+				<mat-card-subtitle>{{ item.key }}</mat-card-subtitle>
+			</mat-card-header>
+			<mat-card-content>
+				
+			</mat-card-content>
+			<mat-card-actions>
+				<button type="button" class="btn btn-sm" 
+				  [ngClass]="{'btn-primary': (item.val['cluster_state'] === 'ok'), 'btn-danger': (item.val['cluster_state'] !== 'ok') }">
+				  ClusterState <span class="badge badge-light">{{ item.val['cluster_state'] }}</span>
+				</button>
+				<button type="button" class="btn btn-primary btn-sm"
+				  [ngClass]="{'btn-primary': (item.val['link_state'] === 'connected'), 'btn-danger': (item.val['link_state'] !== 'connected') }">
+				  LinkState <span class="badge badge-light">{{ item.val['link_state'] }}</span>
+				</button>
+				<button type="button" class="btn btn-primary btn-sm"
+				  [ngClass]="{'btn-primary': (item.val['slaves'].length > 0), 'btn-warning': (item.val['slaves'].length == 0) }">
+				  Slaves <span class="badge badge-light">{{ item.val.slaves.length }}</span>
+				</button>
+				<button type="button" class="btn btn-primary btn-sm"
+				  [ngClass]="{'btn-primary': true }">
+				  Keys <span class="badge badge-light">{{ item.val['keys'] }}</span>
+				</button>
+				<button type="button" class="btn btn-primary btn-sm"
+				  [ngClass]="{'btn-primary': (item.val['cluster_slots_fail'] === 0), 'btn-danger': (item.val['cluster_slots_fail'] > 0) }">
+				  SlotsFail <span class="badge badge-light">{{ item.val['cluster_slots_fail'] }}</span>
+				</button>
+			</mat-card-actions>
+			<mat-card-footer>
+			</mat-card-footer>
+		</mat-card>
+	</div>
+	
+	<mat-divider style="margin:10px;"></mat-divider>
+	
+	<div class="form-group">
+		<!-- <label for="statisticchart">Chart:</label> -->
+		<div style="display:flex; justify-content: center; align-items: center;" id="statisticchart">
+			<select style="width: 300px; background: slategrey; color: white;"
+				class="form-control btn dropdown-toggle summary-statistic-selector"
+				[(ngModel)]="selectedstatistic" 
+				(change)="onSelectMetricChange($event.target.value)">
+		    	<option>[ hide chart ]</option>
+		    	<mat-divider></mat-divider>
+		    	<option *ngFor="let statistic of statisticslist"><a href="#">{{ statistic.name }}</a></option>
+		    </select>
+		    
+		    <mat-spinner [diameter]="20" [hidden]="(selectedstatistic === echartOptionService.option._selectedmetric) || (selectedstatistic === '[ hide chart ]')"></mat-spinner>
+	    </div>
+		<div style="display: flex" [hidden]="selectedstatistic==='[ hide chart ]'">
+		    <div id="echart" style="height:300px; flex-grow:1; margin:5px"></div>
+		</div>
+	</div>
+	
+</div>
+

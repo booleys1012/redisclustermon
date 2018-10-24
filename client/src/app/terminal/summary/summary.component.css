@@ -1,0 +1,30 @@
+
+.redismaster-card {
+	border-radius: 3px;
+}
+
+.redismaster-card .mat-card-header {
+}
+.redismaster-card .mat-card-header mat-card-title {
+	margin-bottom: 5px;
+}
+.redismaster-card .mat-card-header mat-card-subtitle {
+	margin-bottom: 5px;
+    font-size: 10px;
+}
+.redismaster-card mat-expansion-panel {
+} 
+
+.redismaster-connected-icon {
+	color: cornflowerblue;
+}
+.redismaster-notconnected-icon {
+	color: crimson;
+}
+
+.summary-statistic-selector {
+}
+
+.mat-card-actions button {
+	margin: 2px;
+}

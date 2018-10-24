@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <div>
+  	<pre>{{ data.summary | json }}</pre>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button cdkFocusInitial (click)="onCloseClick()">Close</button>
+</div>
