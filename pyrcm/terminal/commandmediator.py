@@ -32,6 +32,9 @@ from pyrcm.terminal.rediscmd_hget import RedisClusterCmd_Hget
 from pyrcm.terminal.rediscmd_hgetall import RedisClusterCmd_Hgetall
 from pyrcm.terminal.rediscmd_exists import RedisClusterCmd_Exists
 from pyrcm.terminal.rediscmd_del import RedisClusterCmd_Del
+from pyrcm.terminal.rediscmd_lrange import RedisClusterCmd_Lrange
+from pyrcm.terminal.rediscmd_smembers import RedisClusterCmd_Smembers
+from pyrcm.terminal.rediscmd_sismember import RedisClusterCmd_Sismember
 
 
 class CmdMediator(object):
@@ -41,6 +44,9 @@ class CmdMediator(object):
                RedisClusterCmd_ScanIter,
                RedisClusterCmd_Exists,
                RedisClusterCmd_Del,
+               RedisClusterCmd_Lrange,
+               RedisClusterCmd_Smembers,
+               RedisClusterCmd_Sismember
                ]
 
     CmdMap = {kls.CMDNAME: kls for kls in CmdList}
